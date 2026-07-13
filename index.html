@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>weather-pro</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <div id="weatherScene">
+        <div id="lightning" class="lightning"></div>
+    </div>
+
+    <div class="container">
+        <div class="weather-card">
+
+            <div class="header">
+                <h1>🌦 Weather Pro</h1>
+                <p>Real-time Weather Dashboard</p>
+            </div>
+
+            <div class="search-box">
+                <input type="text" id="cityInput" placeholder="Search any city...">
+                <button id="searchBtn">Search</button>
+            </div>
+
+            <button id="locationBtn" class="location-btn">
+                📍 Use My Location
+            </button>
+
+            <div class="top-section">
+                <img id="weatherIcon" class="weather-logo" src="images/Weather-Icon.png" alt="Weather Icon">
+                <h2 id="cityName">City Name</h2>
+                <h1 id="temperature">0°C</h1>
+                <p id="description">Weather Description</p>
+            </div>
+
+            <div class="details">
+                <div class="detail-card">
+                    <h4>💧 Humidity</h4>
+                    <p id="humidity">0%</p>
+                </div>
+                <div class="detail-card">
+                    <h4>💨 Wind</h4>
+                    <p id="wind">0 km/h</p>
+                </div>
+                <div class="detail-card">
+                    <h4>🌡 Feels Like</h4>
+                    <p id="feelsLike">0°C</p>
+                </div>
+                <div class="detail-card">
+                    <h4>🌍 Pressure</h4>
+                    <p id="pressure">0 hPa</p>
+                </div>
+                <div class="detail-card">
+                    <h4>👀 Visibility</h4>
+                    <p id="visibility">0 km</p>
+                </div>
+                <div class="detail-card">
+                    <h4>🌅 Sunrise</h4>
+                    <p id="sunrise">--:--</p>
+                </div>
+            </div>
+
+            <div class="forecast">
+                <h3>📅 5-Day Forecast</h3>
+                <div id="forecastContainer" class="forecast-container"></div>
+            </div>
+
+            <div class="history">
+                <h3>🕒 Recent Searches</h3>
+                <div id="historyContainer" class="history-container"></div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
