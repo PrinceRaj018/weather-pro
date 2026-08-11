@@ -1,8 +1,3 @@
-// ===============================
-// API KEY
-// ===============================
-
-const API_KEY = "08b977f6307b3995ffd27d51a9f72f3b";
 
 
 // ===============================
@@ -80,40 +75,60 @@ function searchWeather() {
 
     forecastContainer.innerHTML = "";
 
-    getWeather(city);
+    fetch(`/api/weather?city=${encodeURIComponent(city)}`)
+        .then(response => response.json())
+        .then(data => {
+            temperature.innerText = `${Math.round(data.main.temp)}°C`;
+            cityName.innerText = data.name;
+            description.innerText = data.weather[0].description;
+            humidity.innerText = `${data.main.humidity}%`;
+            feelsLike.innerText = `${Math.round(data.main.feels_like)}°C`;
+            pressure.innerText = `${data.main.pressure} hPa`;
+            visibility.innerText = `${(data.visibility / 1000).toFixed(1)} km`;
+            wind.innerText = `${(data.wind.speed * 3.6).toFixed(1)} km/h`;
+            sunrise.innerText = new Date(data.sys.sunrise * 1000).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+            forecastContainer.innerHTML = "";
+            weatherIcon.src = `https://openweathermap.org/img/wn/${data.weather[0].icon}@4x.png`;
+            saveSearch(data.name);
+            updateWeatherBackground(data.weather[0].main.toLowerCase());
+            updateSkyObjects(data.sys.sunrise, data.sys.sunset, data.timezone);
+            getForecast(data.name);
+            console.log(data);
+        });    
+
 
 }
 
 // ===============================
-// GET WEATHER DATA
+// GET WEATHER
 // ===============================
 
 async function getWeather(city) {
 
-    const url =
-        `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`;
+    const url = `/api/weather?city=${encodeURIComponent(city)}`;
 
-    try {
+try {
 
-        searchBtn.disabled = true;
-        searchBtn.innerText = "Loading...";
+    searchBtn.disabled = true;
+    searchBtn.innerText = "Loading...";
 
-        const response = await fetch(url);
+    const response = await fetch(url);
 
-        const data = await response.json();
+    const data = await response.json();
 
-        console.log(data);
+    console.log(data);
 
-        if (Number(data.cod) !== 200) {
+    if (Number(data.cod) !== 200) {
 
-            alert(data.message);
+        alert(data.message);
 
-            searchBtn.disabled = false;
-            searchBtn.innerText = "Search";
+        searchBtn.disabled = false;
+        searchBtn.innerText = "Search";
 
-            return;
+        return;
 
-        }
+    }
+
 
         // ===============================
         // UPDATE WEATHER
@@ -238,8 +253,7 @@ async function successLocation(position) {
 
     const lon = position.coords.longitude;
 
-    const url =
-        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`;
+    const url = `/api/location?lat=${lat}&lon=${lon}`;
 
     try {
 
@@ -612,8 +626,7 @@ function createLightning() {
 
 async function getForecast(city) {
 
-    const url =
-        `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${API_KEY}&units=metric`;
+    const url = `/api/forecast?city=${encodeURIComponent(city)}`;
 
     try {
 
@@ -969,16 +982,3 @@ function createSnow(){
 
 }
 
-const canvas = document.getElementById("weatherCanvas");
-const ctx = canvas.getContext("2d");
-
-function resizeCanvas(){
-
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-}
-
-resizeCanvas();
-
-window.addEventListener("resize", resizeCanvas);
