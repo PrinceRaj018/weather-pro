@@ -3,7 +3,7 @@ import requests
 from dotenv import load_dotenv
 import os
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder="../templates", static_folder="../static")
 load_dotenv()
 API_KEY = os.getenv("OPENWEATHER_API_KEY")
 
