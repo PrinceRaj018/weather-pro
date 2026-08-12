@@ -7,6 +7,8 @@ app = Flask(__name__, template_folder="../templates", static_folder="../static")
 load_dotenv()
 API_KEY = os.getenv("OPENWEATHER_API_KEY")
 
+@app.route("/api")
+@app.route("/api/")
 @app.route("/")
 def home():
     return render_template("index.html")
